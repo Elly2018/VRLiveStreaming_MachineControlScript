@@ -5,7 +5,6 @@ import socket
 class AJA_Control:
     def __init__(self, ip_address):
         self.ip_address = ip_address
-
     def connect(self, input, output):
         url = "http://"
         url += self.ip_address
@@ -61,12 +60,10 @@ class HyperdeckHD_Control:
 class ControlScriptFactory:
     def __init__(self):
         pass
-
     def create_aja_control(self, ip_address):
         return AJA_Control(ip_address)
-    
     def create_hyperdeck8K_control(self, ip_address, port):
         return Hyperdeck8K_Control(ip_address, port)
-
     def create_hyperdeckHD_control(self, ip_address, port):
         return HyperdeckHD_Control(ip_address, port)
+    
