@@ -21,12 +21,16 @@ class Hyperdeck8K_Control:
         self.ip_address = ip_address
         self.port = port
     def start_recording(self):
+        threading.Thread(target=self._start_recording).start()
+    def _start_recording(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip_address, self.port))
             s.sendall(b"record\n")
             response = s.recv(1024)
             print("Received", repr(response))
     def stop_recording(self):
+        threading.Thread(target=self._stop_recording).start()
+    def _stop_recording(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip_address, self.port))
             s.sendall(b"stop\n")
@@ -38,12 +42,16 @@ class HyperdeckHD_Control:
         self.ip_address = ip_address
         self.port = port
     def start_recording(self):
+        threading.Thread(target=self._start_recording).start()
+    def _start_recording(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip_address, self.port))
             s.sendall(b"record\n")
             response = s.recv(1024)
             print("Received", repr(response))
     def stop_recording(self):
+        threading.Thread(target=self._stop_recording).start()
+    def _stop_recording(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip_address, self.port))
             s.sendall(b"stop\n")
