@@ -1,4 +1,6 @@
 import requests
+import threading
+import socket
 
 class AJA_Control:
     def __init__(self, ip_address):
@@ -15,20 +17,38 @@ class AJA_Control:
         return response
 
 class Hyperdeck8K_Control:
-    def __init__(self, ip_address):
+    def __init__(self, ip_address, port):
         self.ip_address = ip_address
+        self.port = port
     def start_recording(self):
-        pass
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self.ip_address, self.port))
+            s.sendall(b"record\n")
+            response = s.recv(1024)
+            print("Received", repr(response))
     def stop_recording(self):
-        pass
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self.ip_address, self.port))
+            s.sendall(b"stop\n")
+            response = s.recv(1024)
+            print("Received", repr(response))
 
 class HyperdeckHD_Control:
-    def __init__(self, ip_address):
+    def __init__(self, ip_address, port):
         self.ip_address = ip_address
+        self.port = port
     def start_recording(self):
-        pass
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self.ip_address, self.port))
+            s.sendall(b"record\n")
+            response = s.recv(1024)
+            print("Received", repr(response))
     def stop_recording(self):
-        pass
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self.ip_address, self.port))
+            s.sendall(b"stop\n")
+            response = s.recv(1024)
+            print("Received", repr(response))
 
 class ControlScriptFactory:
     def __init__(self):
@@ -37,8 +57,8 @@ class ControlScriptFactory:
     def create_aja_control(self, ip_address):
         return AJA_Control(ip_address)
     
-    def create_hyperdeck8K_control(self, ip_address):
-        return Hyperdeck8K_Control(ip_address)
+    def create_hyperdeck8K_control(self, ip_address, port):
+        return Hyperdeck8K_Control(ip_address, port)
 
-    def create_hyperdeckHD_control(self, ip_address):
-        return HyperdeckHD_Control(ip_address)
+    def create_hyperdeckHD_control(self, ip_address, port):
+        return HyperdeckHD_Control(ip_address, port)
