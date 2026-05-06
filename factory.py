@@ -14,7 +14,15 @@ class AJA_Control:
         response = requests.get(url)
         return response
 
-class Recorder_Control:
+class Hyperdeck8K_Control:
+    def __init__(self, ip_address):
+        self.ip_address = ip_address
+    def start_recording(self):
+        pass
+    def stop_recording(self):
+        pass
+
+class HyperdeckHD_Control:
     def __init__(self, ip_address):
         self.ip_address = ip_address
     def start_recording(self):
@@ -29,6 +37,8 @@ class ControlScriptFactory:
     def create_aja_control(self, ip_address):
         return AJA_Control(ip_address)
     
-    def create_record_control(self, ip_address):
-        return Recorder_Control(ip_address)
+    def create_hyperdeck8K_control(self, ip_address):
+        return Hyperdeck8K_Control(ip_address)
 
+    def create_hyperdeckHD_control(self, ip_address):
+        return HyperdeckHD_Control(ip_address)
